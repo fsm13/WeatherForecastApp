@@ -1,6 +1,6 @@
 package my.newapp.weatherforecastapp
 
-data class DayInfoItem(
+data class WeatherModel(
     val city: String,
     val time: String,
     val condition: String,
