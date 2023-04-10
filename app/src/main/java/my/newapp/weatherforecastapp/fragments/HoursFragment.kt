@@ -1,14 +1,13 @@
 package my.newapp.weatherforecastapp.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import my.newapp.weatherforecastapp.MainViewModel
-import my.newapp.weatherforecastapp.R
 import my.newapp.weatherforecastapp.WeatherModel
 import my.newapp.weatherforecastapp.WeatherRcViewAdapter
 import my.newapp.weatherforecastapp.databinding.FragmentHoursBinding
@@ -51,7 +50,8 @@ class HoursFragment : Fragment() {
                 (hoursArray[i] as JSONObject).getString("time"),
                 (hoursArray[i] as JSONObject).getJSONObject("condition")
                     .getString("text"),
-                (hoursArray[i] as JSONObject).getString("temp_c"),
+                (hoursArray[i] as JSONObject).getString("temp_c")
+                    .toFloat().toInt().toString()+"°С",
                 "",
                 "",
                 (hoursArray[i] as JSONObject).getJSONObject("condition")

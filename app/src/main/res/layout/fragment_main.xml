@@ -62,7 +62,7 @@
                 android:fontFamily="@font/allerta"
                 android:text="London"
                 android:textColor="#FFFFFF"
-                android:textSize="26sp"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imWeather" />
@@ -74,7 +74,7 @@
                 android:fontFamily="@font/allerta"
                 android:text="20°С"
                 android:textColor="#FFFFFF"
-                android:textSize="70sp"
+                android:textSize="50sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvCity" />
@@ -135,6 +135,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:backgroundTint="@color/backgroundTint"
+        android:theme="@style/Theme.WeatherForecastSecond"
         app:layout_constraintEnd_toEndOf="@id/cvMain"
         app:layout_constraintStart_toStartOf="@id/cvMain"
         app:layout_constraintTop_toBottomOf="@id/cvMain">
@@ -147,7 +148,7 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Days" />
+            android:text="days" />
 
     </com.google.android.material.tabs.TabLayout>
 

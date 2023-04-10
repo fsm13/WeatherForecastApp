@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">WeatherForecastApp</string>
-    <string name="information_for">Information for:</string>
+    <string name="app_name">Weather Forecast</string>
+    <string name="information_for" translatable="false">Information for:</string>
+
 </resources>

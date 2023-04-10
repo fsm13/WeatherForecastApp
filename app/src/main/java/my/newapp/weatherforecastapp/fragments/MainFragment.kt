@@ -1,7 +1,6 @@
 package my.newapp.weatherforecastapp.fragments
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,27 +8,28 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
-import my.newapp.weatherforecastapp.*
+import my.newapp.weatherforecastapp.DialogManager
+import my.newapp.weatherforecastapp.MainViewModel
+import my.newapp.weatherforecastapp.VPAdapter
+import my.newapp.weatherforecastapp.WeatherModel
 import my.newapp.weatherforecastapp.databinding.FragmentMainBinding
 import org.json.JSONObject
 
@@ -41,7 +41,7 @@ class MainFragment : Fragment() {
     private lateinit var permissionLauncher: ActivityResultLauncher<String>
     private val fraglist = listOf(HoursFragment.newInstance(), DaysFragment.newInstance())
     private val tabTitleList = listOf("HOURS", "DAYS")
-    private val model : MainViewModel by activityViewModels()
+    private val model: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -84,10 +84,10 @@ class MainFragment : Fragment() {
     }
 
     private fun checkLocation() {
-        if (isLocationEnabled()){
+        if (isLocationEnabled()) {
             getLocation()
         } else {
-            DialogManager.locationSettingsDialog(requireContext(), object : DialogManager.Listener{
+            DialogManager.locationSettingsDialog(requireContext(), object : DialogManager.Listener {
                 override fun onClick(name: String?) {
                     startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
                 }
@@ -101,7 +101,7 @@ class MainFragment : Fragment() {
     }
 
     private fun getLocation() {
-        if (!isLocationEnabled()){
+        if (!isLocationEnabled()) {
             return
         }
         val ct = CancellationTokenSource()
@@ -117,18 +117,19 @@ class MainFragment : Fragment() {
         }
         fLocationClient
             .getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, ct.token)
-            .addOnCompleteListener{
+            .addOnCompleteListener {
                 requestWeatherData("${it.result.latitude},${it.result.longitude}")
             }
     }
 
     private fun updateCurrentCard() = with(binding) {
-        model.liveDataCurrent.observe(viewLifecycleOwner){
-            val maxMinTemp = "${it.maxTemp}°С / ${it.minTemp}°С"
-            val date = " ${getString(R.string.information_for)}\n" + it.time
+        model.liveDataCurrent.observe(viewLifecycleOwner) {
+            val maxMinTemp = "max: ${it.maxTemp}°С / min: ${it.minTemp}°С"
+            val date = it.time
             tvDate.text = date
             tvCity.text = it.city
-            tvCurrentTemp.text = it.currentTemp.ifEmpty { maxMinTemp }
+            tvCurrentTemp.text = if(it.currentTemp.isEmpty()) "${it.maxTemp}°С / ${it.minTemp}°С"
+            else it.currentTemp.toFloat().toInt().toString()+"°С"
             tvCondition.text = it.condition
             tvMaxMin.text = if (it.currentTemp.isEmpty()) "" else maxMinTemp
             Picasso.get().load("https:" + it.imageUrl).into(imWeather)
@@ -222,7 +223,7 @@ class MainFragment : Fragment() {
         model.liveDataCurrent.value = item
     }
 
-            companion object {
+    companion object {
 
         @JvmStatic
         fun newInstance() = MainFragment().apply {}
