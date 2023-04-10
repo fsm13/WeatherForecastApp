@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import my.newapp.weatherforecastapp.databinding.ListItemBinding
 
 class WeatherRcViewAdapter : ListAdapter<WeatherModel, WeatherRcViewAdapter.Holder>(Comparator()) {
@@ -16,7 +17,8 @@ class WeatherRcViewAdapter : ListAdapter<WeatherModel, WeatherRcViewAdapter.Hold
         fun bind(item: WeatherModel) = with(binding) {
             tvDate.text = item.time
             tvCondition.text = item.condition
-            tvTemp.text = item.currentTemp
+            tvTemp.text = item.currentTemp.ifEmpty { "${item.maxTemp}°С / ${item.minTemp}°С" }
+            Picasso.get().load("https:" + item.imageUrl).into(iv)
         }
     }
 

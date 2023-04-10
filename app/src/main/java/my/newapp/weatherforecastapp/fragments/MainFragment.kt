@@ -1,6 +1,7 @@
 package my.newapp.weatherforecastapp.fragments
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ import com.android.volley.toolbox.Volley
 import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
 import my.newapp.weatherforecastapp.MainViewModel
+import my.newapp.weatherforecastapp.R
 import my.newapp.weatherforecastapp.VPAdapter
 import my.newapp.weatherforecastapp.WeatherModel
 import my.newapp.weatherforecastapp.databinding.FragmentMainBinding
@@ -58,7 +60,8 @@ class MainFragment : Fragment() {
     private fun updateCurrentCard() = with(binding) {
         model.liveDataCurrent.observe(viewLifecycleOwner){
             val maxMinTemp = "${it.maxTemp}°С / ${it.minTemp}°С"
-            tvDate.text = it.time
+            val date = " ${getString(R.string.information_for)}\n" + it.time
+            tvDate.text = date
             tvCity.text = it.city
             tvCurrentTemp.text = it.currentTemp
             tvCondition.text = it.condition
@@ -88,7 +91,7 @@ class MainFragment : Fragment() {
                 "&q=" +
                 city +
                 "&days=" +
-                "7" +
+                "15" +
                 "&aqi=no&alerts=no"
         val queue = Volley.newRequestQueue(context)
         val request = StringRequest(
@@ -132,6 +135,7 @@ class MainFragment : Fragment() {
             )
             list.add(item)
         }
+        model.liveDataList.value = list
         return list
     }
 
