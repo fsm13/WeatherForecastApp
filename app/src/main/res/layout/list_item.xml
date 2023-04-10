@@ -51,6 +51,7 @@
             android:id="@+id/tvTemp"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginStart="50dp"
             android:fontFamily="@font/allerta"
             android:gravity="center"
             android:text="20°С"
