@@ -26,10 +26,7 @@ import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
-import my.newapp.weatherforecastapp.DialogManager
-import my.newapp.weatherforecastapp.MainViewModel
-import my.newapp.weatherforecastapp.VPAdapter
-import my.newapp.weatherforecastapp.WeatherModel
+import my.newapp.weatherforecastapp.*
 import my.newapp.weatherforecastapp.databinding.FragmentMainBinding
 import org.json.JSONObject
 
@@ -77,7 +74,9 @@ class MainFragment : Fragment() {
         ibSearch.setOnClickListener {
             DialogManager.searchByNameDialog(requireContext(), object : DialogManager.Listener {
                 override fun onClick(name: String?) {
-                    name?.let { it1 -> requestWeatherData(it1) }
+                    if (name != null) {
+                        requestWeatherData(name)
+                    }
                 }
             })
         }

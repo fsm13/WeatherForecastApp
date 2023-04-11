@@ -3,6 +3,7 @@ package my.newapp.weatherforecastapp
 import android.app.AlertDialog
 import android.content.Context
 import android.widget.EditText
+import android.widget.Spinner
 
 object DialogManager {
     fun locationSettingsDialog(context: Context, listener: Listener) {
